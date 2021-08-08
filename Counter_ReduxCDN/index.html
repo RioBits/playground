@@ -21,35 +21,55 @@
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
     </style>
-    <button onclick="inc()">+</button>
+    <button onclick="inc(5)">+</button>
     <button onclick="dec()">-</button>
+    <button onclick="reset()">reset</button>
+    <button onclick="somethingNotInTheReducer()">Not Expected</button>
     <script defer>
       const resultElement = document.getElementsByTagName('h1')[0]
-      resultElement.innerHTML = 0
 
-      function counterReducer(state = { value: 0 }, action) {
+      const ACTIONS = {
+        increment: 'increment',
+        decrement: 'decrement',
+        reset: 'reset',
+      }
+
+      const initialState = 0
+
+      function counterReducer(state, action) {
         switch (action.type) {
-          case 'counter/incremented':
-            return { value: state.value + 1 }
-          case 'counter/decremented':
-            return { value: state.value - 1 }
+          case ACTIONS.increment:
+            return state + action.payload
+          case ACTIONS.decrement:
+            return state - action.payload
+          case ACTIONS.reset:
+            return initialState
           default:
             return state
         }
       }
 
-      let store = Redux.createStore(counterReducer)
+      let store = Redux.createStore(counterReducer, initialState)
+      resultElement.innerHTML = store.getState()
 
       store.subscribe(() => {
-        resultElement.innerHTML = store.getState().value
+        resultElement.innerHTML = store.getState()
       })
 
-      function inc() {
-        store.dispatch({ type: 'counter/incremented' })
+      function inc(num = 1) {
+        store.dispatch({ type: ACTIONS.increment, payload: num })
       }
 
-      function dec() {
-        store.dispatch({ type: 'counter/decremented' })
+      function dec(num = 1) {
+        store.dispatch({ type: ACTIONS.decrement, payload: num })
+      }
+
+      function reset() {
+        store.dispatch({ type: ACTIONS.reset })
+      }
+
+      function somethingNotInTheReducer() {
+        store.dispatch({ type: 'wired' })
       }
     </script>
   </body>
