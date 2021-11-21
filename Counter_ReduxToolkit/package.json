@@ -1,0 +1,20 @@
+{
+  "name": "counter_reduxtoolkit",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./src/index.js --exec webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "webpack": "^5.64.2",
+    "webpack-cli": "^4.9.1"
+  }
+}
